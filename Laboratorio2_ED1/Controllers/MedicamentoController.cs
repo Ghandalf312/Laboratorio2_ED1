@@ -5,57 +5,101 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
+using Laboratorio2_ED1.Models.Storage;
+using Laboratorio2_ED1.Models;
+using Laboratorio2_ED1.Controllers;
+
+
+//Paquete de nugget PagedList , PagedList.MVC https://albertcapdevila.net/paginar-mvc5/
+using PagedList;
+
 namespace Laboratorio2_ED1.Controllers
 {
     public class MedicamentoController : Controller
     {
-        // GET: MedicamentoController
-        public ActionResult Index()
+
+        // GET: Medicamento
+        public ActionResult Index(int? page)
         {
-            return View();
+            if (Request.Method != "GET")
+            {
+                page = 1;
+            }
+            int pageSize = 25;
+            int pageNumber = (page ?? 1);
+            return View(Singleton.Instance.miArbolMedicamentos.ObtenerLista().ToPagedList(pageNumber, pageSize));
         }
 
-        // GET: MedicamentoController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: MedicamentoController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: MedicamentoController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Index(int? page, FormCollection collection)
         {
-            try
+            if (Request.Method != "GET")
             {
-                return RedirectToAction(nameof(Index));
+                page = 1;
             }
-            catch
-            {
-                return View();
-            }
+            int pageSize = 25;
+            int pageNumber = (page ?? 1);
+
+            var name = collection["search"];
+            return View(MedicamentoModel.Filter(name).ToPagedList(pageNumber, pageSize));
         }
 
-        // GET: MedicamentoController/Edit/5
+
         public ActionResult Edit(int id)
         {
-            return View();
+            var std = Singleton.Instance.misMedicamentosExt.Where(s => s.Id == id).FirstOrDefault();
+            return View(std);
         }
 
-        // POST: MedicamentoController/Edit/5
+        //
+        // POST: /Car/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, FormCollection collection)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                int pedido = int.Parse(collection["Existencia"]);
+                int exist = Singleton.Instance.misMedicamentosExt[id - 1].Existencia;
+                bool agregar = true;
+
+                if (exist == 0)
+                {
+                    ViewBag.Message = "No se encuentra en existencia este producto";
+                    agregar = false;
+                }
+                else if (pedido > Singleton.Instance.misMedicamentosExt[id - 1].Existencia)
+                {
+                    ViewBag.Message = "Solo se agregaron: " + exist + " a la orden.";
+                    pedido = exist;
+                    exist = 0;
+                }
+                else
+                {
+                    if (pedido == exist)
+                    {
+                        exist = 0;
+                    }
+                    ViewBag.Message = pedido + " " + '"' + Singleton.Instance.misMedicamentosExt[id - 1].Nombre + '"' + " agregados a la orden.";
+                    Singleton.Instance.misMedicamentosExt[id - 1].Existencia -= pedido;
+                }
+               
+                if (exist == 0)
+                {
+                    Singleton.Instance.misMedicamentosExt[id - 1].Existencia = 0;
+                    Singleton.Instance.miArbolMedicamentos.Remove(Singleton.Instance.misMedicamentosExt[id - 1]);
+                }
+                if (agregar)
+                {
+                    var nuevoPedido = new MedicamentoExtModel
+                    {
+                        Nombre = Singleton.Instance.misMedicamentosExt[id - 1].Nombre,
+                        Precio = Singleton.Instance.misMedicamentosExt[id - 1].Precio,
+                        Existencia = pedido
+                    };
+                    Singleton.Instance.miPedido.Add(nuevoPedido);
+                }
+
+                return View(Singleton.Instance.misMedicamentosExt[id - 1]);
             }
             catch
             {
@@ -63,25 +107,7 @@ namespace Laboratorio2_ED1.Controllers
             }
         }
 
-        // GET: MedicamentoController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
 
-        // POST: MedicamentoController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+
     }
 }
