@@ -4,15 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
-using Laboratorio2_ED1.Controllers;
 using Laboratorio2_ED1.Models.Storage;
 using Laboratorio2_ED1.Models;
-using Laboratorio2_ED1.Controllers;
 using Microsoft.VisualBasic.FileIO;
 using System.IO;
 using System.Web;
-using HttpPostedFileHelper;
 using System.Configuration;
 
 
@@ -116,8 +112,8 @@ namespace Laboratorio2_ED1.Controllers
                 if (file.Length > 0)
                 {
                     _FileName = Path.GetFileName(file.FileName);
-                    _path = Path.Combine(server.MapPath("~/Archivos"), _FileName);
-                    file.SaveAs(_path);
+                   // _path = Path.Combine(server.MapPath("~/Archivos"), _FileName);
+                    //file.SaveAs(_path);
                     Console.WriteLine(_FileName + ", " + _path);
                 }
 
