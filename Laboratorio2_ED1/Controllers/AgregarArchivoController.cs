@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Laboratorio2_ED1.Models.Storage;
 using Laboratorio2_ED1.Models;
-using Microsoft.VisualBasic.FileIO;
 using System.IO;
 using System.Web;
 using System.Configuration;
@@ -19,141 +18,159 @@ namespace Laboratorio2_ED1.Controllers
         // GET: AgregarArchivoController
         public ActionResult Index()
         {
-            return View();
+            CargarArchivo();
+            return RedirectToAction("Index", "Medicamento");
         }
+        public void CargarArchivo()
+        {                                                 // Poner la ubicacion exacta del archivo MOCK_DATA.txt
 
-        // GET: AgregarArchivoController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\Diego\Desktop\Laboratorio2_ED1\MOCK_DATA.txt");
 
-        // GET: AgregarArchivoController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: AgregarArchivoController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+            foreach (string line in lines)
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: AgregarArchivoController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: AgregarArchivoController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: AgregarArchivoController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: AgregarArchivoController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        
-
-         [HttpGet]
-        public ActionResult SubirArchivo()
-        {
-            return View();
-        }
-
-
-
-        [HttpPost]
-        public ActionResult SubirArchivo(IFormFile file)
-        {
-            string _path = "";
-            string _FileName = "";
-            try
-            {
-
-                if (file.Length > 0)
+                string[] medicina = SplitString(line, ','); //dividir datos
+                MedicamentoExtModel nuevoMedicamento = new MedicamentoExtModel
                 {
-                    _FileName = Path.GetFileName(file.FileName);
-                   // _path = Path.Combine(server.MapPath("~/Archivos"), _FileName);
-                    //file.SaveAs(_path);
-                    Console.WriteLine(_FileName + ", " + _path);
-                }
+                    Id = int.Parse(medicina[0]),
+                    Nombre = medicina[1],
+                    Descripcion = medicina[2],
+                    CasaProd = medicina[3],
+                    Precio = Convert.ToDouble(medicina[4]),
+                    Existencia = int.Parse(medicina[5])
+                };
+                Singleton.Instance.misMedicamentosExt.Add(nuevoMedicamento);
+                Singleton.Instance.miArbolMedicamentos.Add(nuevoMedicamento);
+            }
+        }
 
-                ViewBag.Message = "Archivo subido exitosamente!";
-                using (TextFieldParser parser = new TextFieldParser(_path))
+        string[] SplitString(string texto, char separador)
+        {
+            string[] Resultado = new string[6];
+            int count = 0;
+            int indiceVector = -1;
+            string palabra = "";
+            bool caracterEspecial = false;
+
+            for (int i = 0; i < texto.Length; i++)
+            {
+                if (texto.Substring(count, 1) != separador.ToString()) //comparar cadaletra con el separador
                 {
-                    parser.TextFieldType = FieldType.Delimited;
-                    parser.SetDelimiters(",");
-                    while (!parser.EndOfData)
+                    if (texto.Substring(count, 1) == '\u0022'.ToString())
                     {
-                        string[] fields = parser.ReadFields();
-                        if (fields[0] != "id")
-                        {
-                            var medicamento = new MedicamentoExtModel
-                            {
-                                Id = int.Parse(fields[0]),
-                                Nombre = fields[1],
-                                Descripcion = fields[2],
-                                CasaProd = fields[3],
-                                Precio = double.Parse(fields[4].Substring(1, fields[4].Length - 1)),
-                                Existencia = int.Parse(fields[5]),
-                            };
-
-
-                            Singleton.Instance.misMedicamentosExt.Add(medicamento);
-                            Singleton.Instance.miArbolMedicamentos.Add(medicamento);
-                        }
+                        caracterEspecial = !caracterEspecial; //cambiar el estado de un " encontrado
+                    }
+                    else if (texto.Substring(count, 1) == '$'.ToString())
+                    {
+                        //hacer nada
+                    }
+                    else
+                    {
+                        palabra += texto.Substring(count, 1);
+                    }
+                    count++;
+                }
+                else if (texto.Substring(count, 1) == separador.ToString() && caracterEspecial == true)
+                {
+                    palabra += texto.Substring(count, 1);
+                    count++;
+                }
+                else
+                {
+                    if (indiceVector < 6)
+                    {
+                        indiceVector++;
+                        Resultado[indiceVector] = palabra;
+                        palabra = "";
+                        count++;
                     }
                 }
-                return RedirectToAction("Index", "Medicamento");
-            }
-            catch
-            {
-                ViewBag.Message = "No se pudo subir el archivo";
-                return View();
             }
 
-
-
-
+            string[] algo = texto.Split(',');
+            Resultado[5] = algo[algo.Length - 1];
+            return Resultado;
         }
+        // [HttpGet]
+        //public ActionResult SubirArchivo()
+        //{
+        //    return View();
+        //}
+        //[HttpPost]
+        //public ActionResult SubirArchivo(IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        var path = collection["path"];
+        //        StreamReader streamReader = new StreamReader(path);
+        //        var line = streamReader.ReadLine();
+        //        line = streamReader.ReadLine();
+        //        var medicineData = new List<string>();
+        //        while (line != null)
+        //        {
+        //            while (line != null)
+        //            {
+        //                var comilla = line.IndexOf('"');
+        //                var coma = line.IndexOf(',');
+
+        //                if (coma < comilla)
+        //                {
+        //                    var data = line.Substring(0, coma);
+        //                    line = line.Remove(0, coma + 1);
+        //                    medicineData.Add(data);
+        //                }
+        //                else
+        //                {
+        //                    if (comilla < 0)
+        //                    {
+        //                        if (line.Contains('$'))
+        //                        {
+        //                            line = line.Remove(0, 1);
+        //                        }
+        //                        comilla = line.Length;
+        //                        coma = line.IndexOf(',');
+        //                        string data = "";
+        //                        if (coma < 0)
+        //                        {
+        //                            data = line;
+        //                            line = null;
+        //                        }
+        //                        else
+        //                        {
+        //                            data = line.Substring(0, coma);
+        //                            line = line.Remove(0, coma + 1);
+        //                        }
+        //                        medicineData.Add(data);
+        //                    }
+        //                    else
+        //                    {
+        //                        line = line.Remove(0, 1);
+        //                        comilla = line.IndexOf('"');
+        //                        var data = line.Substring(0, comilla);
+        //                        line = line.Remove(0, comilla + 2);
+        //                        medicineData.Add(data);
+        //                    }
+        //                }
+        //            }
+
+        //            MedicamentoExtModel nuevoMedicamento = new MedicamentoExtModel
+        //            {
+        //                Id = int.Parse(medicineData[0]),
+        //                Nombre = medicineData[1],
+        //                Descripcion = medicineData[2],
+        //                CasaProd = medicineData[3],
+        //                Precio = Convert.ToDouble(medicineData[4]),
+        //                Existencia = int.Parse(medicineData[5])
+        //            };
+        //            Singleton.Instance.misMedicamentosExt.Add(nuevoMedicamento);
+        //            Singleton.Instance.miArbolMedicamentos.Add(nuevoMedicamento);
+        //            line = streamReader.ReadLine();
+        //        }
+        //        return RedirectToAction("Index", "Medicamento");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+    
     }
 }

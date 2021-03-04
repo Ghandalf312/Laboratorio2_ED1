@@ -50,7 +50,7 @@ namespace Laboratorio2_ED1
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=AgregarArchivo}/{action=Index}/{id?}");
             });
         }
     }

@@ -17,7 +17,7 @@ namespace Laboratorio2_ED1.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(FormCollection collection)
+        public ActionResult Index(IFormCollection collection)
         {
             Singleton.Instance.miCliente.Nombre = collection["Nombre"];
             Singleton.Instance.miCliente.Direccion = collection["Direccion"];

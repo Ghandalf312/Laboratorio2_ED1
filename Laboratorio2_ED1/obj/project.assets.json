@@ -6071,11 +6071,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Diego\\Desktop\\URL\\Primer Ciclo 2021\\Estructura de Datos I\\Laboratorio\\Laboratorio2_ED1\\Laboratorio2_ED1\\Laboratorio2_ED1.csproj",
+      "projectUniqueName": "C:\\Users\\Diego\\Desktop\\Laboratorio2_ED1\\Laboratorio2_ED1\\Laboratorio2_ED1.csproj",
       "projectName": "Laboratorio2_ED1",
-      "projectPath": "C:\\Users\\Diego\\Desktop\\URL\\Primer Ciclo 2021\\Estructura de Datos I\\Laboratorio\\Laboratorio2_ED1\\Laboratorio2_ED1\\Laboratorio2_ED1.csproj",
+      "projectPath": "C:\\Users\\Diego\\Desktop\\Laboratorio2_ED1\\Laboratorio2_ED1\\Laboratorio2_ED1.csproj",
       "packagesPath": "C:\\Users\\Diego\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Diego\\Desktop\\URL\\Primer Ciclo 2021\\Estructura de Datos I\\Laboratorio\\Laboratorio2_ED1\\Laboratorio2_ED1\\obj\\",
+      "outputPath": "C:\\Users\\Diego\\Desktop\\Laboratorio2_ED1\\Laboratorio2_ED1\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -6094,8 +6094,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\Diego\\Desktop\\URL\\Primer Ciclo 2021\\Estructura de Datos I\\Laboratorio\\Laboratorio2_ED1\\CustomGenerics\\CustomGenerics.csproj": {
-              "projectPath": "C:\\Users\\Diego\\Desktop\\URL\\Primer Ciclo 2021\\Estructura de Datos I\\Laboratorio\\Laboratorio2_ED1\\CustomGenerics\\CustomGenerics.csproj"
+            "C:\\Users\\Diego\\Desktop\\Laboratorio2_ED1\\CustomGenerics\\CustomGenerics.csproj": {
+              "projectPath": "C:\\Users\\Diego\\Desktop\\Laboratorio2_ED1\\CustomGenerics\\CustomGenerics.csproj"
             }
           }
         }
