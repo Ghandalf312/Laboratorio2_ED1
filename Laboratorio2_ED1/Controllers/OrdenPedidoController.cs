@@ -27,5 +27,7 @@ namespace Laboratorio2_ED1.Controllers
             Singleton.Instance.miPedido.Clear();
             return RedirectToAction("Index", "Medicamento");
         }
+
+      
     }
 }

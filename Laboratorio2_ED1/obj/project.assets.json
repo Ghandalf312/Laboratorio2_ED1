@@ -6065,24 +6065,27 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Diego\\.nuget\\packages\\": {},
+    "C:\\Users\\ZeroJChang\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Diego\\Desktop\\Laboratorio2_ED1\\Laboratorio2_ED1\\Laboratorio2_ED1.csproj",
+      "projectUniqueName": "C:\\Users\\ZeroJChang\\Desktop\\Lab sin nuget\\Laboratorio2_ED1\\Laboratorio2_ED1\\Laboratorio2_ED1.csproj",
       "projectName": "Laboratorio2_ED1",
-      "projectPath": "C:\\Users\\Diego\\Desktop\\Laboratorio2_ED1\\Laboratorio2_ED1\\Laboratorio2_ED1.csproj",
-      "packagesPath": "C:\\Users\\Diego\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Diego\\Desktop\\Laboratorio2_ED1\\Laboratorio2_ED1\\obj\\",
+      "projectPath": "C:\\Users\\ZeroJChang\\Desktop\\Lab sin nuget\\Laboratorio2_ED1\\Laboratorio2_ED1\\Laboratorio2_ED1.csproj",
+      "packagesPath": "C:\\Users\\ZeroJChang\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ZeroJChang\\Desktop\\Lab sin nuget\\Laboratorio2_ED1\\Laboratorio2_ED1\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
+        "C:\\Microsoft\\Xamarin\\NuGet\\",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Diego\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\ZeroJChang\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -6094,8 +6097,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\Diego\\Desktop\\Laboratorio2_ED1\\CustomGenerics\\CustomGenerics.csproj": {
-              "projectPath": "C:\\Users\\Diego\\Desktop\\Laboratorio2_ED1\\CustomGenerics\\CustomGenerics.csproj"
+            "C:\\Users\\ZeroJChang\\Desktop\\Lab sin nuget\\Laboratorio2_ED1\\CustomGenerics\\CustomGenerics.csproj": {
+              "projectPath": "C:\\Users\\ZeroJChang\\Desktop\\Lab sin nuget\\Laboratorio2_ED1\\CustomGenerics\\CustomGenerics.csproj"
             }
           }
         }
@@ -6136,7 +6139,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
       }
     }
   },

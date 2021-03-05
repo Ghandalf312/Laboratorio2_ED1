@@ -19,12 +19,13 @@ namespace Laboratorio2_ED1.Controllers
         public ActionResult Index()
         {
             CargarArchivo();
-            return RedirectToAction("Index", "Medicamento");
+            return RedirectToAction("Index", "Home");
         }
         public void CargarArchivo()
         {                                                 // Poner la ubicacion exacta del archivo MOCK_DATA.txt
 
-            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\Diego\Desktop\Laboratorio2_ED1\MOCK_DATA.txt");
+            //string[] lines = System.IO.File.ReadAllLines(@"C:\Users\ZeroJChang\Desktop\Laboratorio2_ED1\MOCK_DATA.txt");
+            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\ZeroJChang\Desktop\MOCK_DATA.txt");
 
             foreach (string line in lines)
             {
